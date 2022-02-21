@@ -1,0 +1,11 @@
+$theme-layout: (
+  columns: 12,
+  gap: rem(15px),
+  breaks: (
+    sm rem(544px) rem(570px),
+    md rem(768px) rem(720px),
+    lg rem(992px) rem(940px),
+    xl rem(1200px) rem(1280px),
+    xxl rem(1400px) rem(1360px)
+  )
+);

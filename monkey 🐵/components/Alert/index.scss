@@ -1,0 +1,103 @@
+@use 'sass:color';
+@use 'sass:map';
+
+$monkey-alerts: (
+  types: (
+    primary: true,
+    secondary: true,
+    tertiary: true,
+    danger: true,
+    success: true,
+    warning: true,
+    info: true,
+    light: true,
+    dark: true,
+    gray: true,
+    dark-gray: true
+  )
+);
+
+.alert {
+  $t: &;
+  display: flex;
+  align-items: center;
+  gap: rem(20px);
+  padding: rem(15px);
+  border-radius: rem(4px);
+  margin: rem(15px) 0;
+  line-height: 1.2;
+  [data-ui-style=glassmorphism] & {
+    backdrop-filter: blur(2px);
+    border: 2px solid rgba(#fff,.1);
+  }
+  &--small {
+    padding: rem(8px) rem(12px);
+  }
+  &--inline {
+    display: inline-flex;
+    margin-top: 0;
+  }
+
+  &__close {
+    align-self: flex-start;
+    margin-left: auto;
+  }
+
+  &__icon {
+    width: rem(30px);
+    height: rem(30px);
+    svg {
+      width: 100%;
+      height: 100%;
+      fill: currentColor;
+    }
+  }
+  &__main {
+    width: 100%;
+  }
+  &__info {
+    font-size: rem(16px);
+    color: inherit;
+  }
+  &--md {
+    #{$t}__icon {
+      width: rem(45px);
+      height: rem(45px);
+    }
+    #{$t}__info {
+      font-size: rem(18px);
+    }
+  }
+  &--lg {
+    #{$t}__icon {
+      width: rem(70px);
+      height: rem(70px);
+    }
+    #{$t}__info {
+      font-size: rem(20px);
+    }
+  }
+  &--bold {
+    #{$t}__info {
+      font-weight: 600;
+    }
+  }
+  @each $alertType, $key in map.get($monkey-alerts, 'types')
+  {
+    &--#{'' + $alertType} {
+      background: color.mix(map.get($theme-colors, $alertType),#fff, 30%);
+      color: color.mix(map.get($theme-colors, $alertType),#000, 50%);
+      [data-ui-style=glassmorphism] & {
+        background: rgba(color.mix(map.get($theme-colors, $alertType),#fff, 30%),.9);
+      }
+      // color: color.mix($type, #000, 50%);
+      // &#{$t}--clean {
+      //   color: #{$type};
+      // }
+    }
+  }
+  &--clean {
+    padding: 0;
+    background: none;
+  }
+}

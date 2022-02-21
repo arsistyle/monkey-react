@@ -1,0 +1,173 @@
+@use 'sass:color';
+@use 'sass:map';
+
+$monkey-btns: (
+  types: (
+    primary: true,
+    secondary: true,
+    tertiary: true,
+    danger: true,
+    success: true,
+    warning: true,
+    info: true,
+    light: true,
+    dark: true,
+    gray: true,
+    dark-gray: true
+  )
+);
+
+.btn {
+  --monkey-btn-unit: #{rem(12px)};
+  --monkey-btn-font-size: #{rem()};
+  --monkey-btn-radius: #{rem(6px)};
+  $btn: &;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  position: relative;
+  padding: var(--monkey-btn-unit) calc(var(--monkey-btn-unit) * 2);
+  color: var(--monkey-theme-light);
+  background: var(--monkey-theme-default);
+  border: none;
+  border-radius: var(--monkey-btn-radius);
+  transition: all ease 200ms;
+  font-size: var(--monkey-btn-font-size);
+  font-weight: normal;
+  text-decoration: none;
+  cursor: pointer;
+  user-select: none;
+  [data-ui-style=glassmorphism] & {
+    backdrop-filter: blur(5px);
+    border: 2px solid rgba(#fff,.1);
+  }
+  &__label {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+    pointer-events: none;
+  }
+  &__ripple {
+    position: absolute;
+    border-radius: 50%;
+    transform: scale(0);
+    animation: ripple 600ms linear;
+    background-color: rgba(white, 0.2);
+  }
+  &:hover {
+    box-shadow: 0  calc(var(--monkey-btn-unit) * .75) var(--monkey-btn-unit) rgba(map.get($theme-colors, 'default'), .3);
+    background: color.mix(map.get($theme-colors, 'default'), #fff, 90%);
+  }
+
+  // Sizes -- Big
+  &--big {
+    padding: calc(var(--monkey-btn-unit) * 1.5) calc(var(--monkey-btn-unit) * 2);
+    font-size: calc(var(--monkey-btn-font-size) * 1.25);
+  }
+
+  // Sizes -- small
+  &--small {
+    padding: rem(5px) rem(12px);
+    font-size: calc(var(--monkey-btn-font-size) * 0.9);
+  }
+
+  // Shapes -- Rounded
+  &--rounded {
+    border-radius: calc(var(--monkey-btn-unit) * 3);
+  }
+
+  // Shapes -- Square
+  &--square {
+    border-radius: 0;
+  }
+
+  // Bordered & Link
+  &--bordered,
+  &--link {
+    background: transparent;
+    color: var(--monkey-theme-default);
+    &:hover {
+      background: rgba(
+        map.get($theme-colors, 'default'),
+        0.1
+      );
+      box-shadow: none;
+    }
+  }
+
+  &--bordered {
+    border: 1px solid var(--monkey-theme-default);
+  }
+
+  // Btns Types
+  @each $btnType, $key in map.get($monkey-btns, 'types') {
+    @if $key {
+      &--#{'' + $btnType + ''} {
+        background: var(--monkey-theme-#{'' + $btnType + ''});
+        color: #{getColorContrast(map.get($theme-colors, $btnType))};
+        &:hover {
+          box-shadow: 0  calc(var(--monkey-btn-unit) * .75) var(--monkey-btn-unit) rgba(map.get($theme-colors, $btnType), .3);
+          background: color.mix(map.get($theme-colors, $btnType), #fff, 90%);
+        }
+        &#{$btn} {
+          #{$btn}__ripple {
+            background: rgba(color.mix(map.get($theme-colors, $btnType), #fff, 30%), .2);
+          }
+          &--bordered,
+          &--link {
+            background: transparent;
+            color: #{map.get($theme-colors, $btnType)};
+            &:hover {
+              box-shadow: none;
+              background: rgba(
+                map.get($theme-colors, $btnType),
+                0.1
+              );
+            }
+          }
+          &--bordered {
+            border-color: #{map.get($theme-colors, $btnType)};
+          }
+        }
+      }
+    }
+  }
+
+  // Group
+  &__group {
+    $group: &;
+    display: flex;
+    align-items: center;
+    &:not(#{$group}--splitted) {
+      #{$btn} {
+        border-radius: 0;
+        &:first-of-type {
+          border-radius: var(--monkey-btn-radius) 0 0 var(--monkey-btn-radius);
+        }
+        &:last-of-type {
+          border-radius: 0 var(--monkey-btn-radius) var(--monkey-btn-radius) 0;
+        }
+      }
+    }
+    &--splitted {
+      flex-wrap: wrap;
+      gap: var(--monkey-layout-gap);
+    }
+    &--center {
+      justify-content: center;
+    }
+    &--right {
+      justify-content: flex-end;
+    }
+  }
+}
+
+@keyframes ripple {
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
+}

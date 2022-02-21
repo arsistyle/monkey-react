@@ -1,0 +1,6 @@
+body {
+  background: var(--monkey-theme-light);
+  [data-theme="dark"] & {
+    background: var(--monkey-theme-dark);
+  }
+}

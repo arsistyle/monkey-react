@@ -1,0 +1,35 @@
+@use 'sass:map';
+@use 'sass:color';
+
+@import '../config/layout';
+@import '../config/colors';
+@import './reset';
+
+:root {
+  // Theme Colors
+  @each $type, $color in $theme-colors {
+    --monkey-theme-#{""+$type+""}: #{$color};
+  }
+
+  // Theme layout
+  --monkey-layout-columns: #{map.get($theme-layout, columns)};
+  --monkey-layout-gap: #{map.get($theme-layout, gap)};
+}
+
+body {
+  color: var(--monkey-theme-default);
+  
+}
+
+// Dark Theme
+
+[data-theme="dark"] {
+  @each $type, $color in $theme-colors {
+    @if ($type != 'dark' and $type != 'light') {
+      --monkey-theme-#{""+$type+""}: #{mix($color, #fff, 80%)};
+    }
+  }
+  body {
+    color: var(--monkey-theme-light);
+  }
+}

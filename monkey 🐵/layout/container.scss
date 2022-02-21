@@ -1,0 +1,17 @@
+@use 'sass:map';
+
+.container {
+  $container: &;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  padding: 0 var(--monkey-layout-gap);
+  @each $break, $width, $maxWidth in map.get($theme-layout, 'breaks') {
+    &:not(#{$container}--fluid) {
+      @media (min-width: #{$width}) {
+        max-width: #{$maxWidth};
+      }
+    }
+  }
+}
