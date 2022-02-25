@@ -1,9 +1,11 @@
 // Config
 @import './config';
 @import './config/colors';
+@import './config/layout';
 
 // Utilities
 @import './utilities';
+@import './utilities/mixins';
 
 // Base
 @import './base/';
@@ -13,5 +15,6 @@
 @import './layout/columns';
 
 // Components
+@import './components/Text/';
 @import './components/Btn/';
 @import './components/Alert/';

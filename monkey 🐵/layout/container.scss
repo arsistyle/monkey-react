@@ -7,10 +7,14 @@
   flex-direction: column;
   margin: auto;
   padding: 0 var(--monkey-layout-gap);
-  @each $break, $width, $maxWidth in map.get($theme-layout, 'breaks') {
-    &:not(#{$container}--fluid) {
-      @media (min-width: #{$width}) {
-        max-width: #{$maxWidth};
+  @each $key, $values in map.get($theme-layout, 'breaks') {
+    @each $prefix, $value in $values {
+      @if ($prefix == 'min') {
+        &:not(#{$container}--fluid) {
+          @include break($key, $prefix) {
+            max-width: #{$value};
+          }
+        }
       }
     }
   }

@@ -1,5 +1,7 @@
 $monkey-options: (
-  components: (
-    btns: true
+  font-family: ('Roboto', sans-serif),
+  titles: (
+    min-size: 18px,
+    scale: 0.4
   )
-)
+);

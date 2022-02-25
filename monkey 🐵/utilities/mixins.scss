@@ -1,0 +1,8 @@
+@use 'sass:map';
+
+@mixin break($size, $media: 'min') {
+  $value: map.get(map.get(map.get($theme-layout, 'breaks'), $size), $media);
+  @media (#{$media}-width:#{$value}) {
+    @content;
+  }
+}

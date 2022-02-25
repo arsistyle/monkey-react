@@ -14,16 +14,18 @@
   // Theme layout
   --monkey-layout-columns: #{map.get($theme-layout, columns)};
   --monkey-layout-gap: #{map.get($theme-layout, gap)};
+
+  // Tipography
+  --monkey-theme-font-family: #{map.get($monkey-options, 'font-family')};
 }
 
 body {
   color: var(--monkey-theme-default);
-  
 }
 
 // Dark Theme
 
-[data-theme="dark"] {
+[data-theme='dark'] {
   @each $type, $color in $theme-colors {
     @if ($type != 'dark' and $type != 'light') {
       --monkey-theme-#{""+$type+""}: #{mix($color, #fff, 80%)};

@@ -1,11 +1,11 @@
 @use 'sass:map';
 
 @mixin column-properties($i) {
-  flex: auto;
+  flex: none;
   @if ($i == 12) {
     width: 100%;
   } @else {
-    width: calc(100% / #{map.get($theme-layout, 'columns')} * #{$i})
+    width: calc(100% / #{map.get($theme-layout, 'columns')} * #{$i});
   }
 }
 
@@ -21,14 +21,18 @@
     padding-right: var(--monkey-layout-gap);
     @for $i from 1 through map.get($theme-layout, 'columns') {
       &--xs--#{$i} {
-        @include column-properties($i)
+        @include column-properties($i);
       }
     }
-    @each $break, $width in map.get($theme-layout, 'breaks') {
-      @for $i from 1 through map.get($theme-layout, 'columns') {
-        @media (min-width: #{$width}) {
-          &--#{$break}--#{$i} {
-            @include column-properties($i)
+    @each $key, $values in map.get($theme-layout, 'breaks') {
+      @each $prefix, $value in $values {
+        @if ($prefix == 'min') {
+          @for $i from 1 through map.get($theme-layout, 'columns') {
+            @include break($key, $prefix) {
+              &--#{$key}--#{$i} {
+                @include column-properties($i);
+              }
+            }
           }
         }
       }

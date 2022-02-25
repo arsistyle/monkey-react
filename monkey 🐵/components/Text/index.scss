@@ -1,0 +1,50 @@
+@use 'sass:map';
+
+h1,
+.h1,
+h2,
+.h2,
+h3,
+.h3,
+h4,
+.h4,
+h5,
+.h5,
+h6,
+.h6 {
+  font-family: var(--monkey-theme-font-family);
+  color: var(--monkey-theme-default);
+  font-weight: 900;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  line-height: 1.25;
+}
+
+$titles-min-size: rem(map.get(map.get($monkey-options, 'titles'), 'min-size'));
+$titles-scale: map.get(map.get($monkey-options, 'titles'), 'scale');
+
+@for $i from 1 through 6 {
+  h#{$i},
+  .h#{$i} {
+    font-size: $titles-min-size + $titles-scale * (6 - $i);
+    @include break(md, max) {
+      $font-scale-r: 0.3;
+      font-size: $titles-min-size + $font-scale-r * (6 - $i);
+    }
+  }
+}
+
+a {
+  color: inherit;
+}
+
+p,
+.p {
+  font-size: rem(16px);
+  color: var(--monkey-theme-default);
+  line-height: 1.5;
+  font-weight: 400;
+  small {
+    color: inherit;
+  }
+}

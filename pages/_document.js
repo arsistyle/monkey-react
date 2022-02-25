@@ -1,13 +1,9 @@
-import {
-  Html,
-  Head,
-  Main,
-  NextScript
-} from 'next/document';
+import { Html, Head, Main, NextScript } from 'next/document';
 
 const Document = () => {
   return (
     // <Html data-ui-style='glassmorphism' data-theme='dark'>
+    // <Html data-theme='dark'>
     <Html>
       <Head />
       <body>
@@ -16,6 +12,6 @@ const Document = () => {
       </body>
     </Html>
   );
-}
+};
 
 export default Document;

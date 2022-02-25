@@ -2,10 +2,25 @@ $theme-layout: (
   columns: 12,
   gap: rem(15px),
   breaks: (
-    sm rem(544px) rem(570px),
-    md rem(768px) rem(720px),
-    lg rem(992px) rem(940px),
-    xl rem(1200px) rem(1280px),
-    xxl rem(1400px) rem(1360px)
+    sm: (
+      min: rem(544px),
+      max: rem(570px)
+    ),
+    md: (
+      min: rem(768px),
+      max: rem(720px)
+    ),
+    lg: (
+      min: rem(992px),
+      max: rem(940px)
+    ),
+    xl: (
+      min: rem(1200px),
+      max: rem(1280px)
+    ),
+    xxl: (
+      min: rem(1400px),
+      max: rem(1360px)
+    )
   )
 );

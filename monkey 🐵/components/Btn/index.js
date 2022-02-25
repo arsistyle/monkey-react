@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { spreadClasses } from 'monkey 🐵/utilities';
 
-export const Btn = ({
+export default function Btn({
   href,
   children,
   color,
@@ -10,9 +10,11 @@ export const Btn = ({
   rounded,
   square,
   size,
+  bright,
+  ghost,
   ripple = false, // TODO: Desactivado hasta solucionar el bug del padre en relative
   onClick: clickEvent = null
-}) => {
+}) {
   const Component = href ? 'a' : 'button';
 
   const [options, setOptions] = useState([]);
@@ -29,11 +31,9 @@ export const Btn = ({
     let d = Math.max(button.clientWidth, button.clientHeight);
 
     circle.style.width = circle.style.height = d + 'px';
-    circle.style.left =  event.clientX - button.offsetLeft - d / 2 + 'px';
+    circle.style.left = event.clientX - button.offsetLeft - d / 2 + 'px';
     circle.style.top = event.clientY - button.offsetTop - d / 2 + 'px';
     circle.classList.add('btn__ripple');
-
-    
 
     button.appendChild(circle);
   }
@@ -41,32 +41,29 @@ export const Btn = ({
   const handleClick = (event) => {
     ripple && createRipple(event);
     clickEvent && clickEvent(event);
-  }
-
+  };
 
   useEffect(() => {
     setOptions([
       'btn',
-      `${color ? `btn--${color}` : ''}`,
-      `${bordered ? `btn--bordered` : ''}`,
-      `${link ? `btn--link` : ''}`,
-      `${rounded ? `btn--rounded` : ''}`,
-      `${square ? `btn--square` : ''}`,
-      `${size ? `btn--${size}` : ''}`
+      color && `btn--${color}`,
+      bright && `btn--bright`,
+      bordered && `btn--bordered`,
+      link && `btn--link`,
+      ghost && `btn--ghost`,
+      rounded && `btn--rounded`,
+      square && `btn--square`,
+      size && `btn--${size}`
     ]);
-  }, [bordered, color, link, rounded, size, square]);
+  }, [bordered, color, bright, link, rounded, size, square, ghost]);
 
   return (
-    <Component
-      href={href}
-      className={spreadClasses(options)}
-      onClick={handleClick}
-    >
-      {/* <span className='btn__label'>{children}</span> */}
-      {children}
+    <Component href={href} className={spreadClasses(options)} onClick={handleClick}>
+      <span className='btn__label'>{children}</span>
+      {/* {children} */}
     </Component>
   );
-};
+}
 
 export const BtnGroup = ({ children, align, splitted }) => {
   const [options, setOptions] = useState([]);
@@ -79,7 +76,5 @@ export const BtnGroup = ({ children, align, splitted }) => {
     ]);
   }, [align, splitted]);
 
-  return (
-    <div className={spreadClasses(options)}>{children}</div>
-  );
+  return <div className={spreadClasses(options)}>{children}</div>;
 };

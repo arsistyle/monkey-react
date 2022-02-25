@@ -26,9 +26,24 @@ $monkey-alerts: (
   border-radius: rem(4px);
   margin: rem(15px) 0;
   line-height: 1.2;
-  [data-ui-style=glassmorphism] & {
+  transition: all ease 200ms;
+  [data-ui-style='glassmorphism'] & {
     backdrop-filter: blur(2px);
-    border: 2px solid rgba(#fff,.1);
+    border: 2px solid rgba(#fff, 0.1);
+  }
+  p,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  a {
+    color: inherit;
+  }
+  &--hiding {
+    opacity: 0;
+    transform: translateY(10px);
   }
   &--small {
     padding: rem(8px) rem(12px);
@@ -38,9 +53,10 @@ $monkey-alerts: (
     margin-top: 0;
   }
 
-  &__close {
-    align-self: flex-start;
-    margin-left: auto;
+  &--actions {
+    @include break(sm, max) {
+      flex-wrap: wrap;
+    }
   }
 
   &__icon {
@@ -52,13 +68,31 @@ $monkey-alerts: (
       fill: currentColor;
     }
   }
-  &__main {
-    width: 100%;
+
+  &__content {
+    margin-right: auto;
+    > :first-child {
+      margin-top: 0;
+    }
   }
-  &__info {
-    font-size: rem(16px);
-    color: inherit;
+
+  &__actions {
+    justify-self: flex-end;
+    display: flex;
+    justify-content: flex-end;
+    gap: rem(10px);
+    @include break(sm, max) {
+      order: 10;
+      width: 100%;
+    }
   }
+
+  &__close {
+    align-self: flex-start;
+    justify-self: flex-end;
+    cursor: pointer;
+  }
+
   &--md {
     #{$t}__icon {
       width: rem(45px);
@@ -82,21 +116,19 @@ $monkey-alerts: (
       font-weight: 600;
     }
   }
-  @each $alertType, $key in map.get($monkey-alerts, 'types')
-  {
+  @each $alertType, $key in map.get($monkey-alerts, 'types') {
     &--#{'' + $alertType} {
-      background: color.mix(map.get($theme-colors, $alertType),#fff, 30%);
-      color: color.mix(map.get($theme-colors, $alertType),#000, 50%);
-      [data-ui-style=glassmorphism] & {
-        background: rgba(color.mix(map.get($theme-colors, $alertType),#fff, 30%),.9);
+      background: color.mix(map.get($theme-colors, $alertType), #fff, 30%);
+      color: color.mix(map.get($theme-colors, $alertType), #000, 50%);
+      [data-ui-style='glassmorphism'] & {
+        background: rgba(color.mix(map.get($theme-colors, $alertType), #fff, 30%), 0.9);
       }
-      // color: color.mix($type, #000, 50%);
-      // &#{$t}--clean {
-      //   color: #{$type};
-      // }
+      &#{$t}--text {
+        color: #{map.get($theme-colors, $alertType)};
+      }
     }
   }
-  &--clean {
+  &--text {
     padding: 0;
     background: none;
   }
